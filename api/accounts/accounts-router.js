@@ -1,7 +1,9 @@
+const router = require('express').Router()
+
 const { checkAccountId, checkAccountPayload, checkAccountNameUnique } = require('./accounts-middleware');
 const { getAll, getById, create, updateById, deleteById } = require('./accounts-model');
 
-const router = require('express').Router()
+
 
 router.get('/', async (req, res, next) => {
   // KODLAR BURAYA
@@ -16,7 +18,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', checkAccountId, async (req, res, next) => {
   // KODLAR BURAYA
   try {
-    const account = await getById();
+    const account = await getById(req.params.id);
     res.json(account);
   } catch(error) {
     next(error)
@@ -27,7 +29,7 @@ router.post('/', checkAccountPayload, checkAccountNameUnique, async (req, res, n
   // KODLAR BURAYA
   try {
     const account = await create(req.body);
-    res.json(account);
+    res.status(201).json(account);
   } catch(error) {
     next(error)
   }
@@ -43,10 +45,10 @@ router.put('/:id', checkAccountId, checkAccountPayload, checkAccountNameUnique, 
   }
 });
 
-router.delete('/:id', checkAccountId, (req, res, next) => {
+router.delete('/:id', checkAccountId, async (req, res, next) => {
   // KODLAR BURAYA
   try {
-    const account = deleteById(req.params.id);
+    const account = await deleteById(req.params.id);
     res.json(account);
   } catch(error) {
     next(error)

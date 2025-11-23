@@ -1,4 +1,4 @@
-const db = require('../data/db-config');
+const db = require('../../data/db-config');
 
 const getAll = () => {
   // KODLAR BURAYA
@@ -27,7 +27,7 @@ const updateById = (id, account) => {
 const deleteById = id => {
   // KODLAR BURAYA
   return getById(id).then(account => {
-    return db('accounts').where('id', id).del().then(()=> {
+    return db('accounts').where('id', id).delete().then(()=> {
       return account;
     });
   })

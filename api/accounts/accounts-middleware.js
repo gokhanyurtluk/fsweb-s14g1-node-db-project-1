@@ -39,15 +39,16 @@ exports.checkAccountNameUnique = async (req, res, next) => {
   }
 }
 
-exports.checkAccountId = (req, res, next) => {
+exports.checkAccountId = async (req, res, next) => {
   // KODLAR BURAYA
   try {
     const {id} = req.params;
-    const account = getById(id);
+    const account = await getById(id);
     if(!account) {
       return res.status(404).json({message: "account not found"})
     }
     next();
   } catch(error) {
     next(error)
+}
 }
