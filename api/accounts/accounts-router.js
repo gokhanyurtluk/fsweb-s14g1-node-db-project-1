@@ -1,3 +1,4 @@
+const { checkAccountId, checkAccountPayload, checkAccountNameUnique } = require('./accounts-middleware');
 const { getAll, getById, create, updateById, deleteById } = require('./accounts-model');
 
 const router = require('express').Router()
